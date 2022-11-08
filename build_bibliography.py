@@ -138,6 +138,7 @@ s = s.replace("Peter M. Graffy","P. M. Graffy")
 s = s.replace("Youbao Tang","Y. Tang")
 s = s.replace("Yuxing Tang","Y. Tang")
 s = s.replace("Thomas Shen","T. Shen")
+s = s.replace("Tejas Sudharshan", "T. S.")
 s = s.replace("Michelle Fritz","M. Fritz")
 s = s.replace("Jiamin Liu","J. Liu")
 s = s.replace("Victoria Noe-Kim","V. Noe-Kim")
@@ -160,9 +161,9 @@ s = s.replace("\\", "")
 
 s += """
 
-# Select Abstracts
+# Selected Abstracts
 <span style="font-size:0.9em;">**Automated Deep Learning Diagnosis of Hepatic Steatosis on CT Scans Reveals Underreporting by Radiologists**</span><br>
-<span style="font-size:0.9em;">D. Yardeni, T. C. Shen, **D. C. Elton**, S. Lee, R. M. Summers, Y. Rotman. *The Liver Meeting*, 2022. [[pdf](../assets/my_papers/B_AI_medical_imaging/2022_Yardeni_Hepatology_abstract.pdf)]</span>
+<span style="font-size:0.9em;">D. Yardeni, T. C. Shen, **D. C. Elton**, S. Lee, R. M. Summers, Y. Rotman. *The Liver Meeting*, 2022. [[link](https://aasldpubs.onlinelibrary.wiley.com/doi/10.1002/hep.32697)][[pdf](../assets/my_papers/B_AI_medical_imaging/2022_Yardeni_Hepatology_abstract.pdf)]</span>
 
 # Ph.D. Thesis
 <img class="alignright" src="http://www.danielcelton.com/wp-content/uploads/2015/09/waterbinding2-300x204.png" alt="atom in a clathrate-like cage" width="100" height="70" srcset="http://www.moreisdifferent.com/wp-content/uploads/2015/09/waterbinding2-300x204.png 300w, http://www.moreisdifferent.com/wp-content/uploads/2015/09/waterbinding2-768x523.png 768w, http://www.moreisdifferent.com/wp-content/uploads/2015/09/waterbinding2-1024x698.png 1024w, http://www.moreisdifferent.com/wp-content/uploads/2015/09/waterbinding2-1200x818.png 1200w, http://www.moreisdifferent.com/wp-content/uploads/2015/09/waterbinding2.png 1573w" sizes="(max-width: 199px) 100vw, 199px" />
