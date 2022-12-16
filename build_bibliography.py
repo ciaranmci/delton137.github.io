@@ -41,6 +41,7 @@ def parse_bib(f):
 
     if 'arxiv' in bd.keys():
         s += "  [[arXiv]("+bd['arxiv']+")]"
+        s += "  [[arXiv]("+bd['arxiv'].replace("/abs/", "/pdf/")+")]"
 
     if 'medrxiv' in bd.keys():
         s += "  [[medRxiv]("+bd['medrxiv']+")]"
