@@ -39,16 +39,18 @@ def parse_bib(f):
     if 'url' in bd.keys():
         s += "  [[link]("+bd['url']+")]"
 
+    pdf_link = f.replace(".bib", ".pdf")
+
     if 'arxiv' in bd.keys():
         s += "  [[arXiv]("+bd['arxiv']+")]"
-        s += "  [[pdf]("+bd['arxiv'].replace("/abs/", "/pdf/")+")]"
+        if not(os.path.exists(pdf_link)):
+            s += "  [[pdf]("+bd['arxiv'].replace("/abs/", "/pdf/")+")]"
 
     if 'medrxiv' in bd.keys():
         s += "  [[medRxiv]("+bd['medrxiv']+")]"
 
     s += " [[.bib](../"+f.replace("/home/dan/Dropbox/delton137.github.io/", "")+")]"
 
-    pdf_link = f.replace(".bib", ".pdf")
     if os.path.exists(pdf_link):
         pdf_link = pdf_link.replace("/home/dan/Dropbox/delton137.github.io/", "")
         s += "[[pdf](../" + pdf_link + ")]"
