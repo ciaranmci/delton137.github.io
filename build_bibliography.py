@@ -36,10 +36,12 @@ def parse_bib(f):
 
     s += " ("+bd['year']+")"
 
-    if 'url' in bd.keys():
-        s += "  [[link]("+bd['url']+")]"
+    s += " [[.bib](../"+f.replace("/home/dan/Dropbox/delton137.github.io/", "")+")]"
 
     pdf_link = f.replace(".bib", ".pdf")
+
+    if 'url' in bd.keys():
+        s += "  [[link]("+bd['url']+")]"
 
     if 'arxiv' in bd.keys():
         s += "  [[arXiv]("+bd['arxiv']+")]"
@@ -49,7 +51,6 @@ def parse_bib(f):
     if 'medrxiv' in bd.keys():
         s += "  [[medRxiv]("+bd['medrxiv']+")]"
 
-    s += " [[.bib](../"+f.replace("/home/dan/Dropbox/delton137.github.io/", "")+")]"
 
     if os.path.exists(pdf_link):
         pdf_link = pdf_link.replace("/home/dan/Dropbox/delton137.github.io/", "")
