@@ -29,53 +29,64 @@ By entropy, we mean the Shannon entropy of the distribution:
 $$H(x) = \sum_i - p_i \log(p_i)$$
 
 The Shannon entropy gives the average information that we expect to obtain from sampling the distribution. Information is quantified using the Shannon measure, which says that the information contained in an observation is given by:
-$$ H = -\log(p) = \log(\frac{1}{p})$$
+$$H = -\log(p) = \log(\frac{1}{p})$$
 
 Remember that we are thinking of probability distributions as being due to human ignorance. The Shannon measure quantifies this. Outcomes that are very unexpected give us more information, while expected outcomes give us little information.
 
 # Example of how Shannon's formula measures information - Wenglish
 
-The most teachable example of Shannon's measure in action I have read so far is to consider a fictitious language called Wenglish. Wenglish is like English, in that the probability of each letter is equal to the probabilities of letters in English. The probability of _a_ for instance is 0.0625, while the probability of _z_ is only ~.001. Consider we have created a list of 2^15=32,768 Wenglish words, and we have someone choose one at random without looking it. If we learn that the first letter is _z_, this conveys a lot of information, since it narrows down the possibilities - on average only 32 words in the list start with z. If we learn the first letter is _a, _this conveys less information, since a lot of words start with _a_. If you want to read more about this, and several other examples, see McKay's book, Chapter 4 ([free pdf)](http://www.inference.phy.cam.ac.uk/mackay/itprnn/ps/65.86.pdf). Shannon's formula captures this by using $$ 1/p$$. The use of the \logarithm ensures that the measure is additive when probability distributions are combined.
+The most teachable example of Shannon's measure in action I have read so far is to consider a fictitious language called Wenglish. Wenglish is like English, in that the probability of each letter is equal to the probabilities of letters in English. The probability of _a_ for instance is 0.0625, while the probability of _z_ is only ~.001. Consider we have created a list of 2^15=32,768 Wenglish words, and we have someone choose one at random without looking it. If we learn that the first letter is _z_, this conveys a lot of information, since it narrows down the possibilities - on average only 32 words in the list start with _z_. If we learn the first letter is _a_, this conveys less information, since a lot of words start with _a_. If you want to read more about this, and several other examples, see McKay's book, Chapter 4 ([free pdf)](http://www.inference.phy.cam.ac.uk/mackay/itprnn/ps/65.86.pdf). Shannon's formula captures this by using $1/p$ (i.e. the inverse of the probability). The use of the $log()$ ensures that the measure is additive when probability distributions are combined.
 
 The entropy of a distribution is the average Shannon information of the distribution. Distributions that are more spread out have the highest entropy, while distributions that have sharp peaks have lower entropy.
 
 # Maximum entropy applied
-Now, lets consider how we apply the MaxEnt principle. For simplicity, we consider a probability distribution over a discrete space indexed by $$i$$. Suppose we know the averages of 2 different functions $$ <f_1(i)> = F_1$$ and $$ <f_2(i)>= F_2$$. Now we wish to maximize the entropy of the distribution subject to these constraints. We also have the constraint:
-$$ \sum_{i=1}^np_i=1$$
+Now, lets consider how we apply the MaxEnt principle. For simplicity, we consider a probability distribution over a discrete space indexed by $i$. Suppose we know the averages of 2 different functions $f_1(i) = F_1$ and $f_2(i)= F_2$. Now we wish to maximize the entropy of the distribution subject to these constraints. We also have the constraint:
+$$\sum_{i=1}^np_i=1$$
 
-We use Langrange multipliers to find the maxima. Strictly speaking, what follows is not a proof, because we do not prove that the extremum we find is a maximum, and we are not proving the validity of setting the derivative to zero. (this type method would fail to find the maximum of $$ f(x) = -\mbox{abs}(x)$$, for example). For the more mathematically inclined, full proofs can be [found here](http://www.latex.uconn.edu/~kconrad/blurbs/analysis/entropypost.pdf).
+We use Langrange multipliers to find the maxima. Strictly speaking, what follows is not a proof, because we do not prove that the extremum we find is a maximum, and we are not proving the validity of setting the derivative to zero (this type method would fail to find the maximum of $f(x) = -\mbox{abs}(x)$, for example). For the more mathematically inclined, full proofs can be [found here](http://www.latex.uconn.edu/~kconrad/blurbs/analysis/entropypost.pdf).
 
 We construct the following function:
-$$ F(p_1,cdots,p_n, \lambda_0, \lambda_1, \lambda_2) = -_{i=1}^n p_i \log(p_i) + \lambda_0(\sum\limits_{i=1}^n p_i - 1) + \lambda_1(\sum\limits_{i=1}^n p_i f_1(i) - F_1) +
-\lambda_2(\sum\limits_{i=1}^n p_i f_2(i) - F_2)$$
+$$F(p_1, \cdots, p_n, \lambda_0, \lambda_1, \lambda_2) = -\sum\limits_{i=1}^n p_i \log(p_i) + \lambda_0 (\sum\limits_{i=1}^n p_i - 1) + \lambda_1 (\sum\limits_{i=1}^n p_i f_1(i) - F_1) + \lambda_2(\sum\limits_{i=1}^n p_i f_2(i) - F_2)$$
 
-The extremum is found when
-$$ \frac{\partial F}{\partial p_i} = 0$$
-for all $$ i$$.
+The extremum is found when $\frac{\partial F}{\partial p_i} = 0$ for all $i$.
 
 We obtain:
-$$ -1 - \log(p_i) + \lambda_0 + \lambda_1 f_1(i) + \lambda_2 f_2(i) = 0$$
+$$-1 - \log(p_i) + \lambda_0 + \lambda_1 f_1(i) + \lambda_2 f_2(i) = 0$$
+<details>
+  <summary>(<i>Show the steps</i>)</summary>
+  
+  $$-\log(p_i) = -(-1 - \log(p_i) + \lambda_0 + \lambda_1 f_1(i) + \lambda_2 f_2(i))$$
+  $$\log(p_i) = -1 - \log(p_i) + \lambda_0 + \lambda_1 f_1(i) + \lambda_2 f_2(i)$$
+</details>
+
 so
-$$ p_i = e^{\lambda_0 - 1 + \lambda_1 f_1(i) + \lambda_2 f_2(i)}$$
+$$p_i = e^{-1 + \lambda_0 + \lambda_1 f_1(i) + \lambda_2 f_2(i)}$$
 
-or for a probability function over $$ latexbf{R}$$:
-$$ p(x) = e^{\lambda_0 - 1 + \lambda_1 f_1(x) + \lambda_2 f_2(x)}$$
+or for a probability function over $\mathbb{R}$:
+$$p(x) = e^{-1 + \lambda_0 + \lambda_1 f_1(x) + \lambda_2 f_2(x)}$$
 
-Where $$ \lambda_0$$, $$ \lambda_1$$, and $$ \lambda_2$$ are set such that the constraints are satisfied.
+where $\lambda_0$, $\lambda_1$, and $\lambda_2$ are set such that the constraints are satisfied.
 
 # Some examples
-Let's quickly run through some of the simplest cases. First, consider no constraints. Then
-$$ p_i = e^{\lambda_0 - 1} = c$$
+Let's quickly run through some of the simplest cases. First, consider no constraints, i.e.
+$$p_i = e^{\lambda_0 - 1} = c$$
 To satisfy our the constraint that all probabilities sum to 1, then
-$$ p_i= \frac{1}{n}$$
+$$p_i= \frac{1}{n}$$
 
-Now lets say that $$ f_1(x) = x$$, with $$ <f_1(x)> = mu$$ and $$ f_2(x) = (x-mu)^2$$ and $$ <f_2(x)> = \sigma$$. In other words, we know the mean and variance of $$ p(x)$$, but nothing else.
+Now lets say that some function $f_1()$ maps a vector $__x__$ to some number $\mu$ - $f_1(__x__) = \mu$ - and some other arbitrary function $f_2()$ maps the same vector to some other number $\sigma$ - $f_2(__x__) = \sigma = (x_i - \mu)^2$. We have arbitrarily set two constraints.
 
-Then
-$$ p(x) = e^{\lambda_0 - 1 + \lambda_1 x+ \lambda_2 (x-mu)^2}$$
+Summating with our Lagrange multipliers gives us:
+$$p(x_i) = e^{-1 + \lambda_0 + \lambda_1 x_i + \lambda_2 (x_i - \mu)^2}$$
 
-A wild Gaussian has appeared! The condition that $$ \int_{\mathbf{R}}p(x)dx$$ be finite requires $$ \lambda_1 = 0$$ and $$ \lambda_2 < 0$$. After solving for the Lagrange multipliers we obtain:
-$$ p(x) = \frac{1}{\sqrt{2\pi \sigma}} e^{\frac{(x-mu)^2}{2\sigma^2}}$$
+To satisfy our condition that $\int_{\mathbb{R}}p(__x__)dx$ be finite requires that $\lambda_1 = 0$ and $\lambda_2 < 0$. After solving for the Lagrange multipliers we obtain:
+<details>
+  <summary>(<i>Show the steps</i>)</summary>
+  TBA
+</details>
+
+$$p(x_i) = \frac{1}{\sqrt{2\pi \sigma}} e^{\frac{(x_i - \mu)^2}{2 \sigma^2}}$$
+
+You might recognise this as the formula for the Gaussian distribution. The eagle-eyed among you might have already noticed that those two, "arbitrary" constraints actually represent the arithmetic mean and the variance of $p(__x__)$ when we summate, i.e. $\sum\limits_{i=1}^n x_i =$ arithmetic mean and $\sum\limits_{i=1}^n (x_i - \mu)^2$ variance. Note, therefore, that the Gaussian is the least informative distribution for _any_ situation where we know a) there is some function that provides a single-value summary of the distribution, and b) there is another particular function that provides the the square of the difference of observations from the output of the first function
 
 # The loaded dice
 Let's consider a "loaded dice". The average number of dots returned from a fair dice is 21/6 = 7/2 = 3.5. Let's suppose that we are told that instead we have a dice which yields an average of $$ <p_i> = \mu$$, where $$ i$$ is between 1 and 6. What is the MaxEnt prior for $$ (p_1, p_2, p_3, p_4, p_5, p_6)$$? First, we generalize to an $$ n$$ sided die, (at the end, we set $$ n=6$$.
